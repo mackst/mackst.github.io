@@ -1,0 +1,13 @@
+
+html
+env\Script\pelican.exe content -o output -s pelicanconf.py
+
+server
+cd output
+..\env\Script\Python.exe -m pelican.server
+
+git branch copy
+\env\Script\Python.exe \env\Script\ghp-import output
+git checkout master
+git merge gh-pages
+git push --all
