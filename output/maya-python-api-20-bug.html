@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Just A Page</title>
+    <title>Maya Python API 2.0 bug</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Mack Stone">
@@ -64,7 +64,7 @@
           <div class="nav-collapse">
             <ul class="nav">
                           <li class="divider-vertical"></li>
-                  <li >
+                  <li class="active">
                     <a href="/category/maya-python-api.html">
 						<i class="icon-folder-open icon-large"></i>Maya Python API
 					</a>
@@ -84,9 +84,20 @@
     <div class="container-fluid">
       <div class="row">
         <div class="span9" id="content">
-        <div class="article">
-                <h1><a href="/maya-python-api-20-bug.html">Maya Python API 2.0 bug</a></h1>
-                <div class="well small"><footer class="post-info">
+<section id="content">
+        <article>
+                <header>
+                        <h1>
+                                <a href=""
+                                        rel="bookmark"
+                                        title="Permalink to Maya Python API 2.0 bug">
+                                        Maya Python API 2.0 bug
+                                </a>
+                        </h1>
+                </header>
+                <div class="entry-content">
+                <div class="well">
+<footer class="post-info">
 <span class="label">Date</span>
 <abbr class="published" title="2015-11-04T11:13:00+08:00">
         <i class="icon-calendar"></i>Wed 04 November 2015
@@ -101,13 +112,37 @@
 	<a href="/tag/maya-python-api.html"><i class="icon-tag"></i>Maya Python API</a>
 	<a href="/tag/maya.html"><i class="icon-tag"></i>Maya</a>
 	<a href="/tag/python.html"><i class="icon-tag"></i>Python</a>
-</footer><!-- /.post-info --></div>
-                <div class="summary"><p>Python API 2.0 bug</p>
-                        <a class="btn primary xsmall" href="/maya-python-api-20-bug.html">more ...</a>
-                </div>
-        </div>
-        <hr />
+</footer><!-- /.post-info -->                </div>
+                <p>有一段时间没使用Maya了，前段时间想到个问题，想快速的测试一下，然后发现了这个bug。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">maya.api.OpenMaya</span> <span class="kn">as</span> <span class="nn">om</span>
+<span class="n">ball</span> <span class="o">=</span> <span class="n">cmds</span><span class="o">.</span><span class="n">polySphere</span><span class="p">()</span>
+<span class="n">sellist</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">MSelectionList</span><span class="p">()</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ball</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
+<span class="n">mpIt</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">MItMeshPolygon</span><span class="p">(</span><span class="n">sellist</span><span class="o">.</span><span class="n">getDagPath</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">mpIt</span><span class="o">.</span><span class="n">isDone</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">mpIt</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+    <span class="n">mpIt</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>执行上面的命令你会得到一个报错</p>
+<div class="highlight"><pre><span class="c"># Error: line 1: TypeError: file &lt;maya console&gt; line 8: next() takes exactly one argument (0 given) #</span>
+</pre></div>
+
+
+<p>很明显的一个bug，<em>next()</em> 肯定是不需要任何参数的，这个bug存在Maya2015和2016</p>
+                </div><!-- /.entry-content -->
+        </article>
+</section>
         </div><!--/span-->
 
                 <div class="span3 well sidebar-nav" id="sidebar">
