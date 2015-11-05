@@ -135,11 +135,29 @@
 </td></tr></table>
 
 <p>执行上面的命令你会得到一个报错</p>
-<div class="highlight"><pre><span class="c"># Error: line 1: TypeError: file &lt;maya console&gt; line 8: next() takes exactly one argument (0 given) #</span>
+<div class="highlight"><pre><span class="c"># Error: line 1: TypeError: file &lt;maya console&gt; line 9: next() takes exactly one argument (0 given) #</span>
 </pre></div>
 
 
 <p>很明显的一个bug，<em>next()</em> 肯定是不需要任何参数的，这个bug存在Maya2015和2016</p>
+<p>既然想要做得更好，为什么还是while的用法呢，为什么就不能更pythonic，既然是Iterator为什么不能使用for呢。对于根本没有API经验而又非常熟悉python的人来说，下面的代码应该更能理解和好用</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">maya.api.OpenMaya</span> <span class="kn">as</span> <span class="nn">om</span>
+<span class="n">ball</span> <span class="o">=</span> <span class="n">cmds</span><span class="o">.</span><span class="n">polySphere</span><span class="p">()</span>
+<span class="n">sellist</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">MSelectionList</span><span class="p">()</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ball</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">mpIt</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">MItMeshPolygon</span><span class="p">(</span><span class="n">sellist</span><span class="o">.</span><span class="n">getDagPath</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">mp</span> <span class="ow">in</span> <span class="n">mpIt</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">mp</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
                 </div><!-- /.entry-content -->
         </article>
 </section>
